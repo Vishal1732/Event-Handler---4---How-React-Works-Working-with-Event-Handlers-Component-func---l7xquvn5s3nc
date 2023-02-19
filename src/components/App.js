@@ -1,23 +1,32 @@
 import React from "react";
-// import '../styles/App.css';
+import "../styles/App.css";
 const App = () => {
-  const handleInput = (event) => {
-    // use console.log
-    console.log(`Input in #${event.target.id} is ${event.target.value}`);
-    // #text-input is sfdfg
-    // #num-input is 83247
+  let numClicks = 0;
+  let singleClickTimer;
+  const handleClick = () => {
+    numClicks++;
+    if (numClicks === 1) {
+      singleClickTimer = setTimeout(() => {
+        numClicks = 0;
+        console.log("I was not double clicked");
+      }, 400);
+    } else if (numClicks === 2) {
+      clearTimeout(singleClickTimer);
+      numClicks = 0;
+      console.log("I was double clicked");
+    }
   };
 
-  // do not change id of input elements
   return (
     <div id="main">
-      <label htmlFor="text-input">Text Input:- </label>
-      <input id="text-input" onChange={handleInput} type={"text"} />
-      <br />
-      <br />
-      <label htmlFor="num-input">Number input</label>
-      <input id="num-input" onChange={handleInput} type={"number"} />
-      <br />
+      <button
+        id="dblclick-btn"
+        onClick={(event) => {
+          handleClick(event);
+        }}
+      >
+        Double click me
+      </button>
     </div>
   );
 };
